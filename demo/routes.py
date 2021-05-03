@@ -3,9 +3,12 @@ from .server import websocket_handler
 from aiohttp import web
 
 
-# Cоздание заглушки для сайта
+# Cоздание путей для обработчиков
 def setup_routes(app):
-    # Добавить возможность циклического считывания
-    app.router.add_routes([web.get('/', frontend.index),
-                           web.get('/ws', websocket_handler),
-                           web.post('/update', frontend.update)])
+    app.router.add_routes(
+        # Главная страница
+        [web.get('/', frontend.index),
+         # Websocket
+         web.get('/ws', websocket_handler),
+         # Обработчик скрипта дин.обновления
+         web.post('/update', frontend.update)])

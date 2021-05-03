@@ -3,14 +3,14 @@ import logging
 # Импорт приложения из внешнего файла
 from demo import create_app
 
-
 # Cоздаем проиложение
 app = create_app()
 # Создадим сервер
 
 if __name__ == '__main__':
-    # Запустим приложение
+    # Отобразим логи сервера в Python консоль
     logging.basicConfig(level=logging.DEBUG)
+    # Запустим приложение
     aiohttp.web.run_app(app, port=5000)
 
 
