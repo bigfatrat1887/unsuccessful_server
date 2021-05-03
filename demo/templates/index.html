@@ -2,31 +2,13 @@
 <html lang="en">
 <head>
     <script src="http://code.jquery.com/jquery.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function() {
-        var text = "";
-         $('.update').on('click', function() {
-            req = $.ajax({
-                url : '/update',
-                dataType: 'json',
-                type : 'POST',
-                success: function(resp){
-                    for (item of resp['resp']) {
-                        text += `<div> ${item[0]} -- ${item[1]} </div>`
-                    }
-                    $('#table').html(text);
-                    text = "";
-                }
-            });
-         });
-       });
-  </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Socket Thing1</title>
 </head>
 <body>
     <script>
+    var text = "";
     // Create WebSocket connection.
     var socket = new WebSocket("ws://localhost:5000/ws");
 
@@ -42,22 +24,23 @@
 
     // Listen for messages
     socket.addEventListener('message', function (event) {
-        console.log('Message: ', event.data);
+        // Serialize from Str to JSON
+        var get = JSON.parse(event.data);
+        // Add new message
+        text += `<div> ${get['id']} -- ${get['text']} </div>`
+        // Display new text in console and page
+        $('#table').html(text);
+        console.log('Message: ', get);
+
     });
     // Send a msg to the websocket
     const sendMsg = () => {
         socket.send(document.getElementById('msg').value);
     }
     </script>
-    {% block content %}
-        Client1
+        Client
         <div class="row">Текст: <input type="text" minlength="1" id="msg"></div>
         <button onclick="sendMsg()" class="update">Send Msg</button>
-        <div name="table" id="table">
-           {% for item in resp %}
-                <div>{{item.0}} -- {{item.1}}</div>
-            {% endfor %}
-        </div>
-    {% endblock %}
+        <div name="table" id="table"></div>
 </body>
 </html>

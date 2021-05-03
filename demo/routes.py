@@ -9,6 +9,4 @@ def setup_routes(app):
         # Главная страница
         [web.get('/', frontend.index),
          # Websocket
-         web.get('/ws', websocket_handler),
-         # Обработчик скрипта дин.обновления
-         web.post('/update', frontend.update)])
+         web.get('/ws', websocket_handler)])

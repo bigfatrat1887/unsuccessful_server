@@ -7,11 +7,12 @@ from demo import create_app
 app = create_app()
 # Создадим сервер
 
+
 if __name__ == '__main__':
-    # Отобразим логи сервера в Python консоль
+    # Отобразим логи сервера
     logging.basicConfig(level=logging.DEBUG)
-    # Запустим приложение
     aiohttp.web.run_app(app, port=5000)
+
 
 
 
